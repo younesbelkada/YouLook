@@ -1,6 +1,6 @@
 # YouLook - Annotation tool 
 
-![alt text](https://github.com/younesbelkada/YouLook/blob/main/logo.png?raw=true)
+![alt text](https://github.com/younesbelkada/YouLook/blob/main/logo.png?raw=true | width=100)
 
 ## Requirements
 

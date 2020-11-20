@@ -1,5 +1,5 @@
 # YouLook - Annotation tool
-<img src="https://github.com/younesbelkada/YouLook/blob/main/logo.png" width=50% height=50%>
+<img align="center" src="https://github.com/younesbelkada/YouLook/blob/main/logo.png" width=30% height=50%>
 
 ## Requirements
 

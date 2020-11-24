@@ -1,4 +1,8 @@
-# YouLook - Annotation tool 
+# YouLook - Annotation tool
+
+<p align="center">
+  <img align="center" src="https://github.com/younesbelkada/YouLook/blob/main/logo.png" width=30% height=50%>
+</p>
 
 
 ## Requirements

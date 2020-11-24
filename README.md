@@ -13,6 +13,7 @@ openpifpaf
 pyqt5
 numpy
 opencv-python
+PIL 
 ```
 
 

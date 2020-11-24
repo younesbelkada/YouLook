@@ -23,8 +23,10 @@ def load_pifpaf():
     net_cpu, _ = openpifpaf.network.factory(checkpoint='shufflenetv2k16w', download_progress=False)
     net = net_cpu.to(device)
     openpifpaf.decoder.CifSeeds.threshold = 0.5
-    openpifpaf.decoder.nms.Keypoints.keypoint_threshold = 0.2
+    openpifpaf.decoder.nms.Keypoints.keypoint_threshold = 0.0
     openpifpaf.decoder.nms.Keypoints.instance_threshold = 0.2
+    openpifpaf.decoder.nms.Keypoints.keypoint_threshold_rel = 0.0
+    openpifpaf.decoder.CifCaf.force_complete = True
     processor = openpifpaf.decoder.factory_decode(net.head_nets, basenet_stride=net.base_net.stride)
     preprocess = openpifpaf.transforms.Compose([openpifpaf.transforms.NormalizeAnnotations(),openpifpaf.transforms.CenterPadTight(16),openpifpaf.transforms.EVAL_TRANSFORM])
     return net, processor, preprocess

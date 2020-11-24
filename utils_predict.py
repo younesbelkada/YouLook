@@ -35,7 +35,7 @@ def normalize(X, Y, divide=True):
     #exit(0)
     return X_new, Y_new
 
-def run_and_rectangle(img, data, model):
+def run_and_rectangle(img, data, model, device):
 
 	font                   = cv2.FONT_HERSHEY_SIMPLEX
 	fontScale              = 0.30
@@ -53,7 +53,7 @@ def run_and_rectangle(img, data, model):
 		#print(bb)
 		#inp[:17], inp[17:34], inp[34:]
 		X_new, Y_new = normalize(X, Y)
-		inp = torch.tensor(np.concatenate((X_new, Y_new, C)).tolist()).to('cuda').view(1, -1)
+		inp = torch.tensor(np.concatenate((X_new, Y_new, C)).tolist()).to(device).view(1, -1)
 		pred = model(inp).item()
 		inputs.append(A)
 		#break

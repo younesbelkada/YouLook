@@ -16,6 +16,7 @@ import PIL
 
 use_cuda = torch.cuda.is_available()
 device = torch.device("cuda" if use_cuda else "cpu")
+#device = torch.device("cpu")
 print('Device: ', device)
 
 def load_pifpaf():
@@ -228,7 +229,8 @@ class Ui_MainWindow(object):
             #print(data)
             img = cv2.imread(self.get_image())
             self.img = img
-            img_out, Y, X, bboxes = run_and_rectangle(img, data, self.model)
+            #data = data.to
+            img_out, Y, X, bboxes = run_and_rectangle(img, data, self.model, device)
             #print(Y, X)
             #exit(0)
             self.Y = Y

@@ -193,7 +193,7 @@ class Ui_MainWindow(object):
             #print(data)
             img = cv2.imread(self.get_image())
             self.img = img
-            img_out, Y, X, bboxes = run_and_rectangle(img, data, self.model)
+            img_out, Y, X, bboxes = run_and_rectangle(img, data, self.model, device)
             #print(Y, X)
             #exit(0)
             self.Y = Y

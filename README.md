@@ -8,24 +8,23 @@
 ## Requirements
 
 ```
-torch == 1.5.1+cu101
 openpifpaf
 pyqt5
 numpy
-opencv-python
+opencv-python==4.1.2.30 
 Pillow 
 ```
 
 ## Install 
 
 ```
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ## Usage
 
 ```
-python main-new.py
+python3 main-new.py
 ```
 
 

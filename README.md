@@ -21,6 +21,10 @@ Pillow
 pip3 install -r requirements.txt
 ```
 
+## Load the pretrained model
+
+Download the pretrained model here : https://drive.google.com/file/d/1F2MfiYY7Y-Tuyhw-7GGwkIs_NDd5-NhW/view?usp=sharing
+
 ## Usage
 
 ```

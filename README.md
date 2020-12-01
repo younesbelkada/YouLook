@@ -8,24 +8,27 @@
 ## Requirements
 
 ```
-torch == 1.5.1+cu101
 openpifpaf
 pyqt5
 numpy
-opencv-python
+opencv-python==4.1.2.30 
 Pillow 
 ```
 
 ## Install 
 
 ```
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
+
+## Load the pretrained model
+
+Download the pretrained model here : https://drive.google.com/file/d/1F2MfiYY7Y-Tuyhw-7GGwkIs_NDd5-NhW/view?usp=sharing
 
 ## Usage
 
 ```
-python main-new.py
+python3 main-new.py
 ```
 
 

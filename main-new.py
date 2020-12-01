@@ -110,6 +110,11 @@ class Ui_MainWindow(object):
         self.pushButton_4.clicked.connect(self.click_back)
         self.pushButton_5.clicked.connect(self.selectFile)
         self.pushButton_2.clicked.connect(self.save)
+        self.pushButton_2.setShortcut("Ctrl+S")
+        self.pushButton_3.setShortcut("Ctrl+Q")
+        self.pushButton.setShortcut(QtGui.QKeySequence("right"))
+        
+
         self.actionOpen.triggered.connect(self.click_directory)
 
         self.photo.mousePressEvent = self.mouseMoveEvent
@@ -257,7 +262,14 @@ class Ui_MainWindow(object):
         self.path = str(QFileDialog.getExistingDirectory(self.menuFile, "Select Directory"))
         self.tab_im = sorted(glob.glob(self.path+'/*.jpg'))+sorted(glob.glob(self.path+'/*.png'))
         #print(self.tab_im)
-        self.i = 0
+        if len(sorted(glob.glob(self.path+'/anno_'+self.path.split('/')[-1]+'/*.json'))) > 0:
+            name = self.path+'/'+sorted(glob.glob(self.path+'/anno_'+self.path.split('/')[-1]+'/*.json'))[-1].split("/")[-1][:-5]
+            #print(self.path+'/anno_'+self.path.split('/')[-1]+'/*.json')
+            #print(self.tab_im)
+            self.i = self.tab_im.index(name)+1
+        else:
+            self.i = 0
+
         if len(self.tab_im) > 0:
             #self.photo.setPixmap(QtGui.QPixmap(self.tab_im[self.i]))
             self.size = cv2.imread(self.tab_im[self.i]).shape
@@ -294,6 +306,9 @@ class Ui_MainWindow(object):
                 
             else:
                 self.i = 0
+                alert = QtWidgets.QMessageBox()
+                alert.setText('You did all the annotations !')
+                alert.exec_()
                 pixmap = QtGui.QPixmap(self.tab_im[self.i])
                 pixmap = pixmap.scaled(self.size[1], self.size[0], QtCore.Qt.KeepAspectRatio)
                 self.photo.setPixmap(pixmap)
@@ -305,6 +320,7 @@ class Ui_MainWindow(object):
             self.img = None
             self.bboxes = None
             self.saved = False
+
 
     def click_back(self):
         if self.saved == False:

@@ -7,6 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QFileDialog
 import glob
 import os
@@ -152,6 +153,7 @@ class Ui_MainWindow(object):
         self.last_y = e.y()
         #print(self.last_y, self.last_x)
         if self.X != None:
+            
             size_true = self.img.shape
 
             resize_ratio = min(self.size[0]/size_true[0], self.size[1]/size_true[1])
@@ -168,7 +170,10 @@ class Ui_MainWindow(object):
             self.last_y = e.y()*ratio_y+padd_y
             #print(self.last_x, self.last_y)
             #print(self.bboxes)
-            self.update_rects()
+            if e.button() == Qt.LeftButton:
+                self.update_rects()
+            elif e.button() == Qt.RightButton:
+                self.update_rects_remove()
             self.update_image()
             self.saved = False
     def mouseReleaseEvent(self, e):
@@ -182,8 +187,33 @@ class Ui_MainWindow(object):
             if(pointInRect(point, b)):
                 self.Y[i] = 1-self.Y[i]
 
+    def update_rects_remove(self):
+        for i in range(len(self.bboxes)):
+            point = (self.last_x, self.last_y)
+            b = self.bboxes[i]
+            if(pointInRect(point, b)):
+                #self.Y[i] = 1-self.Y[i]
+                self.Y[i] = None
+                self.bboxes[i] = None
+                self.X[i] = None
+        bbox = []
+        Y = []
+        X = []
+        print(self.Y)
+        for i in range(len(self.bboxes)):
+            if self.bboxes[i] != None:
+                bbox.append(self.bboxes[i])
+                Y.append(self.Y[i])
+                X.append(self.X[i])
+        print(self.Y)
+        self.Y = Y
+        self.X = X
+        self.bboxes = bbox
+
 
     def update_image(self):
+        self.img = cv2.imread(self.get_image())
+        img = self.img
         for i in range(len(self.bboxes)):
             bb = self.bboxes[i]
             if self.Y[i] == 1:

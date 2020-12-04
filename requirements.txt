@@ -1,5 +1,5 @@
 openpifpaf
-pyqt5
+PyQt5
 numpy
-opencv-python
+opencv-python==4.2.0.32
 Pillow 

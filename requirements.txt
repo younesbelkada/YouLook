@@ -1,5 +1,4 @@
 openpifpaf
 PyQt5
-numpy
 opencv-python==4.2.0.32
-Pillow 
+matplotlib

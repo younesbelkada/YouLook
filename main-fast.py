@@ -5,7 +5,8 @@
 # Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
-
+import PyQt5
+import matplotlib.pyplot as plt
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QFileDialog
@@ -71,15 +72,17 @@ class Ui_MainWindow(object):
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setObjectName("pushButton")
         self.verticalLayout.addWidget(self.pushButton)
-        self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.verticalLayout.addWidget(self.pushButton_2)
-        self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_3.setObjectName("pushButton_3")
-        self.verticalLayout.addWidget(self.pushButton_3)
-        self.pushButton_5 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_5.setObjectName("pushButton_5")
-        self.verticalLayout.addWidget(self.pushButton_5)
+        
+        #self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
+        #self.pushButton_2.setObjectName("pushButton_2")
+        #self.verticalLayout.addWidget(#self.pushButton_2)
+        #self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
+        #self.pushButton_3.setObjectName("pushButton_3")
+        #self.verticalLayout.addWidget(#self.pushButton_3)
+        #self.pushButton_5 = QtWidgets.QPushButton(self.centralwidget)
+        #self.pushButton_5.setObjectName("pushButton_5")
+        #self.verticalLayout.addWidget(#self.pushButton_5)
+        
         self.horizontalLayout.addLayout(self.verticalLayout)
         self.photo = QtWidgets.QLabel(self.centralwidget)
         self.photo.setMaximumSize(QtCore.QSize(self.size[0], self.size[1]))
@@ -114,12 +117,13 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
         self.pushButton.clicked.connect(self.click)
-        self.pushButton_3.clicked.connect(self.predict)
+        #self.pushButton_3.clicked.connect(self.predict)
         self.pushButton_4.clicked.connect(self.click_back)
-        self.pushButton_5.clicked.connect(self.selectFile)
-        self.pushButton_2.clicked.connect(self.save)
-        self.pushButton_2.setShortcut("Ctrl+S")
-        self.pushButton_3.setShortcut("Ctrl+Q")
+        #self.pushButton_5.clicked.connect(self.selectFile)
+        #self.pushButton_2.clicked.connect(self.save)
+
+        #self.pushButton_2.setShortcut("Ctrl+S")
+        #self.pushButton_3.setShortcut("Ctrl+Q")
         self.pushButton.setShortcut(QtGui.QKeySequence("Space"))
         
 
@@ -128,6 +132,14 @@ class Ui_MainWindow(object):
 
         self.photo.mousePressEvent = self.mouseMoveEvent
         self.net, self.processor, self.preprocess = load_pifpaf()
+        self.model_path = './models/looking_model.pkl'
+        try:
+            self.model = torch.load(self.model_path, map_location=torch.device(device))
+            self.model.eval()
+            self.model_loaded = True
+            print("SUCCESS")
+        except Exception as e:
+            print("ERROR while loading the model : ", e)
 
     def alert(self):
         if self.model_loaded == False:
@@ -328,6 +340,8 @@ class Ui_MainWindow(object):
             pixmap = pixmap.scaled(self.size[1], self.size[0], QtCore.Qt.KeepAspectRatio)
             self.photo.setPixmap(pixmap)
             self.photo.setMaximumSize(QtCore.QSize(self.size[1], self.size[0]))
+        self.predict()
+        self.save()
 
     def click_file_image(self):
         self.path_im = str(QFileDialog.getOpenFileName()[0])
@@ -445,10 +459,10 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("YouLook - Fast annotator", "YouLook - Fast annotator"))
         self.pushButton.setText(_translate("MainWindow", "Next Image"))
-        self.pushButton_2.setText(_translate("MainWindow", "Save"))
-        self.pushButton_3.setText(_translate("MainWindow", "Predict"))
+        ##self.pushButton_2.setText(_translate("MainWindow", "Save"))
+        ##self.pushButton_3.setText(_translate("MainWindow", "Predict"))
         self.pushButton_4.setText(_translate("MainWindow", "Previous Image"))
-        self.pushButton_5.setText(_translate("MainWindow", "Load Model"))
+        #self.pushButton_5.setText(_translate("MainWindow", "Load Model"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.actionOpen.setText(_translate("MainWindow", "Open"))
         self.actionOpenF.setText(_translate("MainWindow", "Open File"))

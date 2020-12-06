@@ -80,9 +80,9 @@ class Ui_MainWindow(object):
         #self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
         #self.pushButton_2.setObjectName("pushButton_2")
         #self.verticalLayout.addWidget(#self.pushButton_2)
-        #self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
-        #self.pushButton_3.setObjectName("pushButton_3")
-        #self.verticalLayout.addWidget(#self.pushButton_3)
+        self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_3.setObjectName("pushButton_3")
+        self.verticalLayout.addWidget(self.pushButton_3)
         #self.pushButton_5 = QtWidgets.QPushButton(self.centralwidget)
         #self.pushButton_5.setObjectName("pushButton_5")
         #self.verticalLayout.addWidget(#self.pushButton_5)
@@ -121,7 +121,7 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
         self.pushButton.clicked.connect(self.click)
-        #self.pushButton_3.clicked.connect(self.predict)
+        self.pushButton_3.clicked.connect(self.predict)
         self.pushButton_4.clicked.connect(self.click_back)
         #self.pushButton_5.clicked.connect(self.selectFile)
         #self.pushButton_2.clicked.connect(self.save)
@@ -129,7 +129,7 @@ class Ui_MainWindow(object):
         self.pushButton_hide.clicked.connect(self.hide)
 
         #self.pushButton_2.setShortcut("Ctrl+S")
-        #self.pushButton_3.setShortcut("Ctrl+Q")
+        self.pushButton_3.setShortcut("Ctrl+Q")
         self.pushButton_hide.setShortcut(QtGui.QKeySequence("h"))
 
         self.pushButton.setShortcut(QtGui.QKeySequence("Space"))
@@ -231,14 +231,16 @@ class Ui_MainWindow(object):
                 self.Y[i] = 1-self.Y[i]
 
     def update_rects_remove(self):
+        j = 0
         for i in range(len(self.bboxes)):
             point = (self.last_x, self.last_y)
             b = self.bboxes[i]
-            if(pointInRect(point, b)):
+            if(pointInRect(point, b)) and j <1:
                 #self.Y[i] = 1-self.Y[i]
                 self.Y[i] = None
                 self.bboxes[i] = None
                 self.X[i] = None
+                j += 1
         bbox = []
         Y = []
         X = []
@@ -482,7 +484,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("YouLook - Fast annotator", "YouLook - Fast annotator"))
         self.pushButton.setText(_translate("MainWindow", "Next Image"))
         self.pushButton_hide.setText(_translate("MainWindow", "Hide"))
-        ##self.pushButton_3.setText(_translate("MainWindow", "Predict"))
+        self.pushButton_3.setText(_translate("MainWindow", "Predict"))
         self.pushButton_4.setText(_translate("MainWindow", "Previous Image"))
         #self.pushButton_5.setText(_translate("MainWindow", "Load Model"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))

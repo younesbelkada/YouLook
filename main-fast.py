@@ -73,6 +73,10 @@ class Ui_MainWindow(object):
         self.pushButton.setObjectName("pushButton")
         self.verticalLayout.addWidget(self.pushButton)
         
+        self.pushButton_hide = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_hide.setObjectName("pushButton_hide")
+        self.verticalLayout.addWidget(self.pushButton_hide)
+
         #self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
         #self.pushButton_2.setObjectName("pushButton_2")
         #self.verticalLayout.addWidget(#self.pushButton_2)
@@ -122,8 +126,12 @@ class Ui_MainWindow(object):
         #self.pushButton_5.clicked.connect(self.selectFile)
         #self.pushButton_2.clicked.connect(self.save)
 
+        self.pushButton_hide.clicked.connect(self.hide)
+
         #self.pushButton_2.setShortcut("Ctrl+S")
         #self.pushButton_3.setShortcut("Ctrl+Q")
+        self.pushButton_hide.setShortcut(QtGui.QKeySequence("h"))
+
         self.pushButton.setShortcut(QtGui.QKeySequence("Space"))
         
 
@@ -132,7 +140,7 @@ class Ui_MainWindow(object):
 
         self.photo.mousePressEvent = self.mouseMoveEvent
         self.net, self.processor, self.preprocess = load_pifpaf()
-        self.model_path = './models/looking_model.pkl'
+        self.model_path = './models/looking_model_jack.pkl'
         try:
             self.model = torch.load(self.model_path, map_location=torch.device(device))
             self.model.eval()
@@ -140,6 +148,7 @@ class Ui_MainWindow(object):
             print("SUCCESS")
         except Exception as e:
             print("ERROR while loading the model : ", e)
+        self.hide_ = False
 
     def alert(self):
         if self.model_loaded == False:
@@ -147,6 +156,19 @@ class Ui_MainWindow(object):
             alert.setText('Please Load a model before')
             alert.exec_()
         
+    def hide(self):
+        if len(self.tab_im) != 0:
+            self.hide_ = 1 - self.hide_
+            if self.hide_:
+                pixmap = QtGui.QPixmap(self.tab_im[self.i])
+                pixmap = pixmap.scaled(self.size[1], self.size[0], QtCore.Qt.KeepAspectRatio)
+                self.photo.setMaximumSize(QtCore.QSize(self.size[1], self.size[0]))
+                self.photo.setPixmap(pixmap)
+                self.saved = False
+            else:
+                self.predict()
+                self.save()
+
     def save(self):
         self.saved = True
         directory_anno = self.path+'/anno_'+self.path.split('/')[-1]
@@ -374,7 +396,7 @@ class Ui_MainWindow(object):
     def click(self):
         if self.saved == False:
             alert = QtWidgets.QMessageBox()
-            alert.setText('Please Save your predictions first')
+            alert.setText('Please Save your predictions first or click Hide again')
             alert.exec_()
         elif len(self.tab_im) != 0:
 
@@ -417,7 +439,7 @@ class Ui_MainWindow(object):
     def click_back(self):
         if self.saved == False:
             alert = QtWidgets.QMessageBox()
-            alert.setText('Please Save your predictions first')
+            alert.setText('Please Save your predictions first or click Hide again')
             alert.exec_()
         elif len(self.tab_im) != 0:
 
@@ -459,7 +481,7 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("YouLook - Fast annotator", "YouLook - Fast annotator"))
         self.pushButton.setText(_translate("MainWindow", "Next Image"))
-        ##self.pushButton_2.setText(_translate("MainWindow", "Save"))
+        self.pushButton_hide.setText(_translate("MainWindow", "Hide"))
         ##self.pushButton_3.setText(_translate("MainWindow", "Predict"))
         self.pushButton_4.setText(_translate("MainWindow", "Previous Image"))
         #self.pushButton_5.setText(_translate("MainWindow", "Load Model"))

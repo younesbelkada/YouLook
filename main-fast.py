@@ -235,7 +235,7 @@ class Ui_MainWindow(object):
         for i in range(len(self.bboxes)):
             point = (self.last_x, self.last_y)
             b = self.bboxes[i]
-            if(pointInRect(point, b)) and j <1:
+            if(pointInRect(point, b)) and j <2:
                 #self.Y[i] = 1-self.Y[i]
                 self.Y[i] = None
                 self.bboxes[i] = None

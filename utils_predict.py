@@ -71,6 +71,44 @@ def run_and_rectangle(img, data, model, device):
 	img = cv2.addWeighted(img, 1.0, blk, 0.55, 1)
 	return img, look, inputs, bboxes
 
+def run_and_rectangle_saved(img, data, model, device, data2):
+	font                   = cv2.FONT_HERSHEY_SIMPLEX
+	fontScale              = 0.30
+	fontColor              = (0,0,0)
+	lineType               = 1
+
+	blk = np.zeros(img.shape, np.uint8)
+	look = []
+	inputs = []
+	bboxes = []
+	for i in range(len(data2['Y'])):
+		#, Y, C, A = convert(data[i]['keypoints'])
+		bb = data2['bbox'][i]
+		inputs.append(data2["X"][i])
+		bboxes.append(bb)
+		#print(bb)
+		#inp[:17], inp[17:34], inp[34:]
+		#X_new, Y_new = normalize(X, Y)
+		#inp = torch.tensor(np.concatenate((X_new, Y_new, C)).tolist()).to(device).view(1, -1)
+		pred = data2["Y"][i]
+		#inputs.append(A)
+		#break
+		if pred > 0.5:
+			blk = cv2.rectangle(blk, (int(bb[0]), int(bb[1])), (int(bb[0]+bb[2]), int(bb[1]+bb[3])), (0,255,0), 1)
+			blk = cv2.rectangle(blk, (int(bb[0]), int(bb[1])-10), (int(bb[0]+30), int(bb[1])), (0,255,0), -1)
+			look.append(1)
+		else:
+			blk = cv2.rectangle(blk, (int(bb[0]), int(bb[1])), (int(bb[0]+bb[2]), int(bb[1]+bb[3])), (0,0,255), 1)
+			blk = cv2.rectangle(blk, (int(bb[0]), int(bb[1])-10), (int(bb[0]+30), int(bb[1])), (0,0,255), -1)
+			look.append(0)
+		cv2.putText(blk,str("%.2f" % pred), (int(bb[0])+4, int(bb[1])-3), font,	fontScale,fontColor,lineType)
+			
+			#break
+	img = cv2.addWeighted(img, 1.0, blk, 0.55, 1)
+	return img, look, inputs, bboxes
+
+
+
 def pointInRect(point,rect):
     x1, y1, w, h = rect
     x2, y2 = x1+w, y1+h

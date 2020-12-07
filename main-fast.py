@@ -9,7 +9,7 @@ import PyQt5
 import matplotlib.pyplot as plt
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtWidgets import QFileDialog, QLabel
 import glob
 import os
 from utils_predict import *
@@ -235,7 +235,7 @@ class Ui_MainWindow(object):
         for i in range(len(self.bboxes)):
             point = (self.last_x, self.last_y)
             b = self.bboxes[i]
-            if(pointInRect(point, b)) and j <2:
+            if(pointInRect(point, b)) and j <1:
                 #self.Y[i] = 1-self.Y[i]
                 self.Y[i] = None
                 self.bboxes[i] = None
@@ -405,7 +405,7 @@ class Ui_MainWindow(object):
             self.size = cv2.imread(self.tab_im[self.i]).shape
             #print(self.size)
             #self.photo.setMaximumSize(QtCore.QSize(self.size[1], self.size[0]))
-            
+            print(self.get_image())
             if self.size[1] > 1300 and self.size[0] > 900:
                 self.size = (800, 1200)
 

@@ -10,9 +10,8 @@
 ```
 openpifpaf
 pyqt5
-numpy
-opencv-python==4.1.2.30 
-Pillow 
+opencv-python==4.1.2.30
+matplotlib
 ```
 
 ## Install 

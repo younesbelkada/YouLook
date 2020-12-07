@@ -10,7 +10,7 @@
 ```
 openpifpaf
 pyqt5
-opencv-python==4.1.2.30
+opencv-python==4.2.0.32
 matplotlib
 ```
 

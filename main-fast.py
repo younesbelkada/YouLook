@@ -18,6 +18,7 @@ import PIL
 
 use_cuda = torch.cuda.is_available()
 device = torch.device("cuda" if use_cuda else "cpu")
+_translate = QtCore.QCoreApplication.translate
 #device = torch.device("cpu")
 print('Device: ', device)
 
@@ -41,7 +42,7 @@ class Ui_MainWindow(object):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1200, 800)
 
-        self.tab_im = []
+        self.tab_im = [""]
         self.path = ""
         self.i = 0
         self.model_path = ""
@@ -64,8 +65,14 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.centralwidget)
         self.horizontalLayout.setObjectName("horizontalLayout")
+
+
+
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
+
+        self.verticalLayout.addStretch()
+
         self.pushButton_4 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_4.setObjectName("pushButton_4")
         self.verticalLayout.addWidget(self.pushButton_4)
@@ -83,6 +90,15 @@ class Ui_MainWindow(object):
         self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_3.setObjectName("pushButton_3")
         self.verticalLayout.addWidget(self.pushButton_3)
+
+
+        self.pushButton_6 = QtWidgets.QLabel("Centre")
+        self.pushButton_6.setText("Test")
+        self.pushButton_6.setAlignment(Qt.AlignCenter) 
+        self.verticalLayout.addWidget(self.pushButton_6)
+        self.verticalLayout.addStretch()
+
+
         #self.pushButton_5 = QtWidgets.QPushButton(self.centralwidget)
         #self.pushButton_5.setObjectName("pushButton_5")
         #self.verticalLayout.addWidget(#self.pushButton_5)
@@ -340,6 +356,9 @@ class Ui_MainWindow(object):
     def get_image(self):
         return self.tab_im[self.i]
 
+    def get_image_name(self):
+        return self.tab_im[self.i].split('/')[-1]
+
     def click_directory(self):
         self.path = str(QFileDialog.getExistingDirectory(self.menuFile, "Select Directory"))
         self.tab_im = sorted(glob.glob(self.path+'/*.jpg'))+sorted(glob.glob(self.path+'/*.png'))
@@ -436,6 +455,7 @@ class Ui_MainWindow(object):
             self.saved = False
             self.predict()
             self.save()
+        self.pushButton_6.setText(_translate("MainWindow", "current frame : {}".format(self.get_image_name())))
 
 
     def click_back(self):
@@ -466,6 +486,7 @@ class Ui_MainWindow(object):
             self.saved = False
             self.predict()
             self.save()
+        self.pushButton_6.setText(_translate("MainWindow", self.get_image_name()))
 
 
     def selectFile(self):
@@ -487,6 +508,8 @@ class Ui_MainWindow(object):
         self.pushButton_3.setText(_translate("MainWindow", "Predict"))
         self.pushButton_4.setText(_translate("MainWindow", "Previous Image"))
         #self.pushButton_5.setText(_translate("MainWindow", "Load Model"))
+        self.pushButton_6.setText(_translate("MainWindow", self.get_image()))
+
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.actionOpen.setText(_translate("MainWindow", "Open"))
         self.actionOpenF.setText(_translate("MainWindow", "Open File"))

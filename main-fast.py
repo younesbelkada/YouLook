@@ -417,7 +417,7 @@ class Ui_MainWindow(object):
     def click(self):
         if self.saved == False:
             alert = QtWidgets.QMessageBox()
-            alert.setText('Please Save your predictions first or click Hide again')
+            alert.setText('Please Save your predictions first or click Original Image again')
             alert.exec_()
         elif len(self.tab_im) != 0:
 
@@ -461,7 +461,7 @@ class Ui_MainWindow(object):
     def click_back(self):
         if self.saved == False:
             alert = QtWidgets.QMessageBox()
-            alert.setText('Please Save your predictions first or click Hide again')
+            alert.setText('Please Save your predictions first or click Original Image again')
             alert.exec_()
         elif len(self.tab_im) != 0:
 
@@ -504,7 +504,7 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("YouLook - Fast annotator", "YouLook - Fast annotator"))
         self.pushButton.setText(_translate("MainWindow", "Next Image"))
-        self.pushButton_hide.setText(_translate("MainWindow", "Hide"))
+        self.pushButton_hide.setText(_translate("MainWindow", "Original Image"))
         self.pushButton_3.setText(_translate("MainWindow", "Predict"))
         self.pushButton_4.setText(_translate("MainWindow", "Previous Image"))
         #self.pushButton_5.setText(_translate("MainWindow", "Load Model"))

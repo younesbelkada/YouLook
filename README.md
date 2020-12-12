@@ -41,7 +41,7 @@ python3 main-fast.py
 ```
 
 On the UI select the following :
-  * If you want to run the annotation pictures on a directory, ```go to File->Open```
+  * If you want to run the annotation pictures on a directory, go to ```File->Open```
   * If you want to run the annotation on a specific file go to ```File->Open File```
 When you run the tool, the software will automaticaly create 3 folders:
   * One folder that contains the annotations **per image** in a ```.json``` format. The folder is called **anno_<folder_name>**

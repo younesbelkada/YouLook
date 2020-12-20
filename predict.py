@@ -10,7 +10,7 @@ import PyQt5
 import matplotlib.pyplot as plt
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QFileDialog, QLabel
+from PyQt5.QtWidgets import QFileDialog, QLabel, QMessageBox
 
 
 use_cuda = torch.cuda.is_available()
@@ -82,13 +82,14 @@ class Ui_MainWindow(object):
 			alert.setText('Please Load a non empty folder before')
 			alert.exec_()
 		else:
-			self.predictor.create_folders()
-			self.predictor.predict()
-			alert = QtWidgets.QMessageBox()
-			alert.setText('Predictions completed, please close this program !')
-			alert.exec_()
-			self.selected = False
-
+			reply = QMessageBox.question(QtWidgets.QMainWindow(), 'Continue?', 'Are you sure ? All your saved annotations will be erased.', QMessageBox.Yes, QMessageBox.No)
+			if reply == QMessageBox.Yes:
+				self.predictor.create_folders()
+				self.predictor.predict()
+				alert = QtWidgets.QMessageBox()
+				alert.setText('Predictions completed, please close this program !')
+				alert.exec_()
+				self.selected = False
 
 	def select_folder(self):
 		self.path = str(QFileDialog.getExistingDirectory(self.pushButton, "Select Directory"))

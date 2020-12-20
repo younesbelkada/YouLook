@@ -33,6 +33,12 @@ Before running the program, make sure that :
   *The requirements have been installed
   *The pretrained model is inside the folder ```models/```
 
+
+## Load the annotation (Recommanded)
+
+If you want a faster usage, run ```python predict.py``` and select the folder you want to work on. After that click on the button ```Predict``` and this will run pifpaf's predictions on all the images of your folder. 
+***Please run it only when it's your first time, otherwise all your saved annotations will be erased***.
+
 ## Usage
 
 To use the software, just run :

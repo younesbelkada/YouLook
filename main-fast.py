@@ -58,7 +58,7 @@ class Ui_MainWindow(object):
 
         self.size = (0,0)
 
-
+        self.r = 0
 
 
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -231,7 +231,14 @@ class Ui_MainWindow(object):
             if e.button() == Qt.LeftButton:
                 self.update_rects()
             elif e.button() == Qt.RightButton:
-                self.update_rects_remove()
+                #self.r += 1
+                print('r', self.r)
+                if self.r %2 == 1:
+                    self.update_rects_remove()
+                    self.r = 0
+                elif self.r % 2 == 0:
+                    self.update_rects_idk()
+                    self.r += 1
             self.update_image()
             self.save()
             self.saved = True
@@ -244,7 +251,21 @@ class Ui_MainWindow(object):
             point = (self.last_x, self.last_y)
             b = self.bboxes[i]
             if(pointInRect(point, b)):
-                self.Y[i] = 1-self.Y[i]
+                if self.Y[i] != -1:
+                    self.Y[i] = 1-self.Y[i]
+                else:
+                    self.Y[i] = 0
+
+    def update_rects_idk(self):
+        j = 0
+        for i in range(len(self.bboxes)):
+            point = (self.last_x, self.last_y)
+            b = self.bboxes[i]
+            if(pointInRect(point, b)) and j <1:
+                #self.Y[i] = 1-self.Y[i]
+                self.Y[i] = -1
+                j += 1
+
 
     def update_rects_remove(self):
         j = 0
@@ -280,9 +301,12 @@ class Ui_MainWindow(object):
             if self.Y[i] == 1:
                 img = cv2.rectangle(self.img, (int(bb[0]), int(bb[1])), (int(bb[0]+bb[2]), int(bb[1]+bb[3])), (0,255,0), 1)
                 img = cv2.rectangle(img, (int(bb[0]), int(bb[1])-10), (int(bb[0]+30), int(bb[1])), (0,255,0), -1)
-            else:
+            elif self.Y[i] == 0:
                 img = cv2.rectangle(self.img, (int(bb[0]), int(bb[1])), (int(bb[0]+bb[2]), int(bb[1]+bb[3])), (0,0,255), 1)
                 img = cv2.rectangle(img, (int(bb[0]), int(bb[1])-10), (int(bb[0]+30), int(bb[1])), (0,0,255), -1)
+            else:
+                img = cv2.rectangle(self.img, (int(bb[0]), int(bb[1])), (int(bb[0]+bb[2]), int(bb[1]+bb[3])), (0,255,255), 1)
+                img = cv2.rectangle(img, (int(bb[0]), int(bb[1])-10), (int(bb[0]+30), int(bb[1])), (0,255,255), -1)
         directory_look = self.path+'/look_'+self.path.split('/')[-1]
         if not os.path.exists(directory_look):
             os.makedirs(directory_look)
@@ -350,6 +374,7 @@ class Ui_MainWindow(object):
             self.photo.setPixmap(pixmap)
             self.photo.setMaximumSize(QtCore.QSize(self.size[1], self.size[0]))
             self.save()
+            self.r = 0
 
         else:
             self.alert()
@@ -507,7 +532,6 @@ class Ui_MainWindow(object):
         self.pushButton_hide.setText(_translate("MainWindow", "Show Original Image"))
         self.pushButton_3.setText(_translate("MainWindow", "Predict"))
         self.pushButton_4.setText(_translate("MainWindow", "Previous Image"))
-        #self.pushButton_5.setText(_translate("MainWindow", "Load Model"))
         self.pushButton_6.setText(_translate("MainWindow", self.get_image()))
 
         self.menuFile.setTitle(_translate("MainWindow", "File"))

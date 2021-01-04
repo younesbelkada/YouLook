@@ -149,6 +149,8 @@ class Ui_MainWindow(object):
         self.pushButton_hide.setShortcut(QtGui.QKeySequence("h"))
 
         self.pushButton.setShortcut(QtGui.QKeySequence("Space"))
+        self.pushButton.setShortcut(QtGui.QKeySequence("6"))
+        self.pushButton_4.setShortcut(QtGui.QKeySequence("4"))
         
 
         self.actionOpen.triggered.connect(self.click_directory)

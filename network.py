@@ -39,7 +39,7 @@ class MonoModel(nn.Module):
         for i in range(self.num_stage):
             y = self.linear_stages[i](y)
         y = self.w2(y)
-        y = self.dropout(y)
+        #y = self.dropout(y)
         #y = self.relu(y)
         return y
 

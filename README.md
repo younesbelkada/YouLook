@@ -36,8 +36,13 @@ Before running the program, make sure that :
 
 ## Load the annotation (Recommanded)
 
-If you want a faster usage, run ```python predict.py``` and select the folder you want to work on. After that click on the button ```Predict``` and this will run pifpaf's predictions on all the images of your folder. 
+If you want a faster usage: 
+
+* **For Linux-Windows users:** run ```python predict.py``` and select the folder you want to work on. After that click on the button ```Predict``` and this will run pifpaf's predictions on all the images of your folder. 
+* **For Mac users:** run ```python predict_raw.py <path_to_folder>``` with ```<path_to_folder>``` corresponding to the path of the folder you want to run your predictions.
+
 ***Please run it only when it's your first time, otherwise all your saved annotations will be erased***.
+
 
 ## Usage
 

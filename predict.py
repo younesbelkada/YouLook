@@ -1,16 +1,13 @@
-import os
-from utils_predict import *
-import openpifpaf
-import PIL
-from glob import glob
-import torch
-from utils_predict import *
-import cv2
 import PyQt5
 import matplotlib.pyplot as plt
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QFileDialog, QLabel, QMessageBox
+from PyQt5.QtWidgets import QFileDialog, QLabel
+from glob import glob
+import os
+from utils_predict import *
+import openpifpaf
+import PIL
 
 
 use_cuda = torch.cuda.is_available()
@@ -82,8 +79,8 @@ class Ui_MainWindow(object):
 			alert.setText('Please Load a non empty folder before')
 			alert.exec_()
 		else:
-			reply = QMessageBox.question(QtWidgets.QMainWindow(), 'Continue?', 'Are you sure ? All your saved annotations will be erased.', QMessageBox.Yes, QMessageBox.No)
-			if reply == QMessageBox.Yes:
+			reply = QtWidgets.QMessageBox.question(QtWidgets.QMainWindow(), 'Continue?', 'Are you sure ? All your saved annotations will be erased.', QtWidgets.QMessageBox.Yes, QtWidgets.QMessageBox.No)
+			if reply == QtWidgets.QMessageBox.Yes:
 				self.predictor.create_folders()
 				self.predictor.predict()
 				alert = QtWidgets.QMessageBox()

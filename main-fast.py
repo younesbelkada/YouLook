@@ -200,15 +200,6 @@ class Ui_MainWindow(object):
 
 
     def mouseMoveEvent(self, e):
-        #print('heho')
-        #print(e.x(), e.y())
-        """if self.last_x is None: # First event.
-            self.last_x = e.x()
-            self.last_y = e.y()
-            return # Ignore the first time."""
-
-        #ratio_x = self.size[0]/self.size[0]
-        #ratio_y = self.size[1]/self.size[1]
         self.last_x = e.x()
         self.last_y = e.y()
         #print(self.last_y, self.last_x)
@@ -220,27 +211,21 @@ class Ui_MainWindow(object):
 
             padd_y = (self.size[0]-size_true[0]*resize_ratio)/2
             padd_x = (self.size[1]-size_true[1]*resize_ratio)/2
-            """print(self.size)
-            print(size_true)
-            print((self.size[1]/size_true[0], self.size[0]/size_true[1]))
-            print('padd :', padd)"""
             ratio_x = size_true[1]/self.size[1]
             ratio_y = size_true[0]/self.size[0]
             self.last_x = e.x()*ratio_x+padd_x
             self.last_y = e.y()*ratio_y+padd_y
-            #print(self.last_x, self.last_y)
-            #print(self.bboxes)
             if e.button() == Qt.LeftButton:
                 self.update_rects()
             elif e.button() == Qt.RightButton:
-                #self.r += 1
                 print('r', self.r)
-                if self.r %2 == 1:
+                """if self.r %2 == 1:
                     self.update_rects_remove()
                     self.r = 0
                 elif self.r % 2 == 0:
                     self.update_rects_idk()
-                    self.r += 1
+                    self.r += 1"""
+                self.update_rects_idk()
             self.update_image()
             self.save()
             self.saved = True
@@ -265,8 +250,28 @@ class Ui_MainWindow(object):
             b = self.bboxes[i]
             if(pointInRect(point, b)) and j <1:
                 #self.Y[i] = 1-self.Y[i]
-                self.Y[i] = -1
-                j += 1
+                if self.Y[i] != -1:
+                    self.Y[i] = -1
+                    j += 1
+                else:
+                    self.Y[i] = None
+                    self.bboxes[i] = None
+                    self.X[i] = None
+                    j += 1
+        bbox = []
+        Y = []
+        X = []
+        print(self.Y)
+        for i in range(len(self.bboxes)):
+            if self.bboxes[i] != None:
+                bbox.append(self.bboxes[i])
+                Y.append(self.Y[i])
+                X.append(self.X[i])
+        print(self.Y)
+        self.Y = Y
+        self.X = X
+        self.bboxes = bbox
+
 
 
     def update_rects_remove(self):

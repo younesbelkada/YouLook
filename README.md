@@ -48,7 +48,7 @@ If you want a faster usage:
 
 To use the software, just run :
 ```
-python3 main-fast.py
+python3 main.py
 ```
 
 On the UI select the following :

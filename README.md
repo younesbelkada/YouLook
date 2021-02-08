@@ -27,6 +27,44 @@ pip3 install -r requirements.txt
 
 If you want to contribute to the benchmark to enhance the training set, you can download challenging pictures here : https://drive.google.com/drive/folders/1rJXOAbsVpwafi6Eo7syVosr6QVXEP0j2?usp=sharing
 
+## Usage
+
+Launch the program (run the following on a terminal)
+```
+git clone https://github.com/younesbelkada/YouLook 
+cd YouLook
+pip3 install --upgrade pip && pip3 install -r requirements.txt
+python3 predict.py
+````
+Choose the folder to label, press ok and go grab a coffee. The program is running pifpaf on the selected folder (~10 minutes). Once this is done, type in the terminal
+```
+python3 main.py
+```
+In the User-Interface: 
+
+* Go to File -> Open -> choose your folder
+* You will see the guesses of the current model: green box => looking, Red box => not-looking
+
+How to use the annotator
+
+* Left-click to change the binary label looking / not-looking
+* Right-click if you are not sure (yellow box)
+* Right-click again to remove the annotation
+
+Keyboard shortcuts
+
+* a, d → move back and forth between images
+* s → show the image without annotations
+* w → predict again with pifpaf
+
+Once you are done with the labeling, the program will inform you. Please send back the annotation folder + the result folder (anno_<folder_name> + out_<folder_name>) as a zip file.
+
+Many thanks for the help!
+
+For any enquiry, please contact: younes.belkada@epfl.ch
+
+
+
 ## Specifications before
 
 Before running the program, make sure that :
